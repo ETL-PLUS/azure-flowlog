@@ -1,0 +1,19 @@
+server:
+  port: 19010
+
+spring:
+  application:
+    name: di-azure-flowlog
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS:192.168.3.169:9092}
+    consumer:
+      group-id: azure-flowlog1
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+      enable-auto-commit: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      compression-type: lz4
+      batch-size: 300

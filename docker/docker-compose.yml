@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  di-azure-flowlog:
+    hostname: di-azure-flowlog
+    image: harbor.jkservice.org/di/azure_flowlog:1.0.0
+    container_name: di-azure-flowlog
+    # ps : DI-docker容器部署中已经添加日志清楚策略，这里可以忽略
+    logging:
+      # 日志方式使用默认json-filefile
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "1"
+    ports:
+      - 19010:19010
+    environment:
+      - KAFKA_SERVERS=192.168.3.169:9092
+    volumes:
+      # 日志输出到当前目录的log目录下
+      - ./logs:/app/data/logs
+      # - ./azure-flowlog-1.0.0.jar:/app/data/azure-flowlog-1.0.0.jar
+    networks:
+      - devops-compose
+networks:
+  devops-compose:
+    external: true
